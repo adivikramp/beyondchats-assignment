@@ -7,7 +7,7 @@ import { Bot, ChevronsUpIcon } from "lucide-react";
 
 const ChatbotSidebar = () => {
     return (
-        <SidebarHeader className="px-0 py-2 h-full flex items-between bg-gradient-to-b from-white via-white to-orange-100 group-data-[collapsible=icon]:items-center group-data-[state=expanded]:items-between">
+        <SidebarHeader className="px-0 py-2 h-full flex items-between bg-gradient-to-b from-white via-white to-purple-100 group-data-[collapsible=icon]:items-center group-data-[state=expanded]:items-between">
             <div className="flex justify-between items-center">
                 <Tabs defaultValue="account" className="group-data-[collapsible=icon]:hidden">
                     <TabsList className="bg-white">

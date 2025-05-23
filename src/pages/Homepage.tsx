@@ -21,19 +21,19 @@ const ChatContainer = () => {
 };
 
 const Homepage = () => {
+    const { state } = useSidebar();
+    const isExpanded = state === 'expanded';
+
     return (
         <div className="relative h-full w-full">
             <div className="h-full flex bg-white overflow-hidden">
-                {/* Fixed width inbox sidebar */}
-                <div className="w-[350px] flex-shrink-0 border-r border-neutral-100">
+                <div className={`flex-shrink-0 border-r border-neutral-100 ${isExpanded ? "hidden" : "w-[350px]"}`}>
                     <InboxSection />
                 </div>
 
                 <SidebarProvider>
-                    {/* Dynamic chat section */}
                     <ChatContainer />
 
-                    {/* Right chatbot sidebar */}
                     <Sidebar
                         side="right"
                         collapsible="icon"
