@@ -23,13 +23,13 @@ export default function Layout() {
     }
 
     return (
-        <SidebarProvider>
+        <SidebarProvider style={{ '--sidebar-width': '800px' } as React.CSSProperties}>
             <AppSidebar />
-            <SidebarInset className="flex-1 py-10 px-6 bg-[#F0F5FA]">
-                <main className="flex-1 bg-white rounded-sm shadow-xl">
+            <SidebarInset className="flex-1 p-12 bg-purple-100 overflow-hidden">
+                <main className="max-h-[800px] bg-white rounded-sm shadow-xl overflow-hidden border border-neutral-200">
                     <Outlet />
                 </main>
             </SidebarInset>
-        </SidebarProvider>
+        </SidebarProvider >
     );
 }

@@ -1,92 +1,49 @@
-import { useState } from "react";
-import {
-    Card,
-    CardHeader,
-    CardFooter,
-} from "@/components/ui/card";
-import {
-    Avatar,
-    AvatarFallback
-} from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import type { InboxItem } from "@/types/types";
-import { inboxItems, messages } from "@/data/data";
+import ChatSection from "@/components/chat-section";
+import ChatbotSidebar from "@/components/chatbot-sidebar";
+import InboxSection from "@/components/inbox-section";
+import { Sidebar, SidebarProvider, useSidebar } from "@/components/ui/sidebar";
 
-const Homepage = () => {
-    const [selectedChat, setSelectedChat] = useState<InboxItem | null>(null);
-
-    const handleChatSelect = (item: InboxItem) => {
-        setSelectedChat(item);
-    };
+const ChatContainer = () => {
+    const { state } = useSidebar();
+    const isExpanded = state === 'expanded';
 
     return (
-        <div className="flex-1 py-10 px-6 bg-[#F0F5FA] flex">
-            <main className="flex-1 bg-white rounded-sm shadow-xl flex">
-                <div className="w-1/3 border-r border-gray-200 p-4">
-                    <h1 className="text-lg font-semibold mb-4">Your inbox</h1>
-                    {inboxItems.map((item) => (
-                        <Card
-                            key={item.id}
-                            className={`mb-2 cursor-pointer ${selectedChat?.id === item.id ? "bg-blue-50" : ""}`}
-                            onClick={() => handleChatSelect(item)}
-                        >
-                            <CardHeader className="flex flex-row items-center space-x-3 p-3">
-                                <Avatar>
-                                    <AvatarFallback>{item.name[0]}</AvatarFallback>
-                                </Avatar>
-                                <div className="flex-1">
-                                    <div className="flex justify-between">
-                                        <p className="font-medium">{item.name}</p>
-                                        <p className="text-sm text-gray-500">{item.time}</p>
-                                    </div>
-                                    <p className="text-sm text-gray-500 truncate">{item.message}</p>
-                                </div>
-                                {item.unread > 0 && (
-                                    <span className="bg-blue-500 text-white text-xs rounded-full px-2 py-1">
-                                        {item.unread}
-                                    </span>
-                                )}
-                            </CardHeader>
-                        </Card>
-                    ))}
+        <div
+            className={`flex-1 min-w-0 transition-all duration-300 ${isExpanded ? 'mr-[150px]' : ''
+                }`}
+            style={{
+                width: isExpanded ? 'calc(100% - 350px - 400px)' : 'calc(100% - 350px)'
+            }}
+        >
+            <ChatSection />
+        </div>
+    );
+};
+
+const Homepage = () => {
+    return (
+        <div className="relative h-full w-full">
+            <div className="h-full flex bg-white overflow-hidden">
+                {/* Fixed width inbox sidebar */}
+                <div className="w-[350px] flex-shrink-0 border-r border-neutral-100">
+                    <InboxSection />
                 </div>
 
-                {/* Chat Area */}
-                <div className="w-2/3 flex flex-col">
-                    {selectedChat ? (
-                        <>
-                            <div className="p-4 border-b border-gray-200">
-                                <h2 className="text-lg font-semibold">{selectedChat.name}</h2>
-                            </div>
-                            <div className="flex-1 p-4 overflow-y-auto">
-                                {messages.map((msg) => (
-                                    <div key={msg.id} className="mb-4">
-                                        <p className="bg-blue-100 p-3 rounded-lg inline-block">{msg.text}</p>
-                                        <p className="text-xs text-gray-500 mt-1">{msg.time}</p>
-                                    </div>
-                                ))}
-                                <div className="flex items-center space-x-2">
-                                    <Avatar>
-                                        <AvatarFallback>{selectedChat.name[0]}</AvatarFallback>
-                                    </Avatar>
-                                    <p className="text-sm">
-                                        Let me just look into this for you, {selectedChat.name}.
-                                    </p>
-                                </div>
-                            </div>
-                            <CardFooter className="p-4 border-t border-gray-200">
-                                <Input placeholder="Use 8K for shortcuts" className="flex-1 mr-2" />
-                                <Button>Send</Button>
-                            </CardFooter>
-                        </>
-                    ) : (
-                        <div className="flex-1 flex items-center justify-center">
-                            <p className="text-gray-500">Select a chat to start messaging</p>
-                        </div>
-                    )}
-                </div>
-            </main>
+                <SidebarProvider>
+                    {/* Dynamic chat section */}
+                    <ChatContainer />
+
+                    {/* Right chatbot sidebar */}
+                    <Sidebar
+                        side="right"
+                        collapsible="icon"
+                        className="absolute right-0 top-0 bottom-0 h-full"
+                        style={{ "--sidebar-width": "400px" } as React.CSSProperties}
+                    >
+                        <ChatbotSidebar />
+                    </Sidebar>
+                </SidebarProvider>
+            </div>
         </div>
     );
 };
