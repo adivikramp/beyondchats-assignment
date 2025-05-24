@@ -36,7 +36,7 @@ const ChatContainer = () => {
 };
 
 const Homepage = () => {
-    const { state, toggleSidebar } = useSidebar();
+    const { state } = useSidebar();
     const isExpanded = state === "expanded";
     const deviceType = useDeviceType();
 
