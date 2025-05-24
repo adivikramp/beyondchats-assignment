@@ -1,19 +1,58 @@
-import * as React from "react"
+import * as React from "react";
 
-const MOBILE_BREAKPOINT = 768
+const BREAKPOINTS = {
+  MOBILE: 768,
+  TABLET: 1024,
+  LAPTOP: 1440,
+  MONITOR: Infinity,
+};
 
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+type DeviceType = "mobile" | "tablet" | "laptop" | "monitor";
+
+export function useDeviceType() {
+  const [deviceType, setDeviceType] = React.useState<DeviceType | undefined>(undefined);
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    }
-    mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener("change", onChange)
-  }, [])
+    const updateDeviceType = () => {
+      const width = window.innerWidth;
 
-  return !!isMobile
+      if (width < BREAKPOINTS.MOBILE) {
+        setDeviceType("mobile");
+      } else if (width >= BREAKPOINTS.MOBILE && width < BREAKPOINTS.TABLET) {
+        setDeviceType("tablet");
+      } else if (width >= BREAKPOINTS.TABLET && width < BREAKPOINTS.LAPTOP) {
+        setDeviceType("laptop");
+      } else {
+        setDeviceType("monitor");
+      }
+    };
+
+    updateDeviceType();
+
+    window.addEventListener("resize", updateDeviceType);
+
+    return () => window.removeEventListener("resize", updateDeviceType);
+  }, []);
+
+  return deviceType;
+}
+
+export function useIsMobile() {
+  const deviceType = useDeviceType();
+  return deviceType === "mobile";
+}
+
+export function useIsTablet() {
+  const deviceType = useDeviceType();
+  return deviceType === "tablet";
+}
+
+export function useIsLaptop() {
+  const deviceType = useDeviceType();
+  return deviceType === "laptop";
+}
+
+export function useIsMonitor() {
+  const deviceType = useDeviceType();
+  return deviceType === "monitor";
 }

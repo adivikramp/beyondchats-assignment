@@ -25,7 +25,7 @@ export default function AppSidebar() {
                                 <span className="w-4 h-4 bg-purple-100 rounded-full"></span>
                                 <span className="text-lg font-semibold">For Agents</span>
                             </Badge>
-                            <h1 className="text-6xl">AI Copilot</h1>
+                            <h1 className="text-5xl md:text-6xl">AI Copilot</h1>
                         </div>
                     </div>
                 </div>
