@@ -4,13 +4,8 @@ import { SidebarContent, SidebarFooter, SidebarHeader, SidebarTrigger } from "./
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Bot, ChevronsUpIcon } from "lucide-react";
-import { useDeviceType } from "@/hooks/use-mobile";
 
 const ChatbotSidebar = () => {
-    const deviceType = useDeviceType();
-
-    const isMobile = deviceType === "mobile";
-    const isTablet = deviceType === "tablet";
 
     return (
         <SidebarHeader className="px-0 py-2 h-full flex items-between bg-gradient-to-b from-white via-white to-purple-100 group-data-[collapsible=icon]:items-center group-data-[state=expanded]:items-between">
@@ -31,7 +26,7 @@ const ChatbotSidebar = () => {
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
-                {(isMobile || isTablet) && <SidebarTrigger className="text-black size-10" />}
+                {<SidebarTrigger className="text-black size-10" />}
             </div>
 
             <Separator className="border border-neutral-200" />
