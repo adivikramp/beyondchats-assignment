@@ -97,7 +97,7 @@ const Homepage = () => {
                     {!isMobile && !isTablet && <ChatContainer />}
 
                     {/* Right sidebar - ChatbotSidebar */}
-                    {(isLaptop || isMonitor || isMobile) ? (
+                    {(isLaptop || isMonitor) ? (
                         <Sidebar
                             side="right"
                             collapsible="icon"
