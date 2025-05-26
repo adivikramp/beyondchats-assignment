@@ -38,7 +38,6 @@ const SkeletonLoading = () => {
                             </div>
                         </div>
 
-                        {/* Table section - made scrollable only horizontally */}
                         <div className="flex-1 min-h-0 overflow-hidden">
                             <div className="overflow-x-auto h-full">
                                 <table className="min-w-full divide-y divide-gray-200">
