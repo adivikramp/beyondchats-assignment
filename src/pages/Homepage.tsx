@@ -5,7 +5,7 @@ import { Sidebar, SidebarProvider, SidebarTrigger, useSidebar } from "@/componen
 import { useDeviceType } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { PanelRightIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 const ChatContainer = () => {
     const { state } = useSidebar();
@@ -36,7 +36,7 @@ const ChatContainer = () => {
 };
 
 const Homepage = () => {
-    const { state } = useSidebar();
+    const { state, toggleSidebar } = useSidebar();
     const isExpanded = state === "expanded";
     const deviceType = useDeviceType();
 
@@ -46,13 +46,16 @@ const Homepage = () => {
     const isMonitor = deviceType === "monitor";
     const [showChatbotSidebar, setShowChatbotSidebar] = React.useState(false);
 
+    useEffect(() => {
+        toggleSidebar();
+    }, [])
+
     if ((isMobile || isTablet) && isExpanded) {
         return (
             <div className="relative h-full w-full">
                 <div className="h-full flex bg-white overflow-hidden">
                     <div className="w-full">
                         <InboxSection />
-                        <SidebarTrigger className="fixed border bottom-4 left-4 z-50" />
                     </div>
                 </div>
             </div>
@@ -64,15 +67,18 @@ const Homepage = () => {
             <div className={`h-full flex bg-white overflow-hidden ${(isMobile || isTablet) ? 'flex-col' : 'flex-row'}`}>
                 {/* Mobile triggers */}
                 {(isMobile || isTablet) && (
-                    <div className="fixed top-2 right-2 flex justify-between z-50">
-                        <Button
-                            onClick={() => setShowChatbotSidebar(!showChatbotSidebar)}
-                            variant="outline"
-                            size="icon"
-                        >
-                            <PanelRightIcon className="h-4 w-4" />
-                        </Button>
-                    </div>
+                    <>
+                        {(isMobile) && <SidebarTrigger className={`${showChatbotSidebar ? "hidden" : "flex"} fixed rounded-bl-none rounded-tl-none text-white bg-black top-2 left-0 z-50 p-4`} />}
+                        <div className="fixed top-2 right-0 flex justify-between z-50">
+                            <Button
+                                onClick={() => setShowChatbotSidebar(!showChatbotSidebar)}
+                                size="sm"
+                                className="bg-black text-white rounded-tr-none rounded-br-none"
+                            >
+                                <PanelRightIcon className="h-2 w-2" />
+                            </Button>
+                        </div>
+                    </>
                 )}
 
                 {/* Left sidebar - InboxSection */}

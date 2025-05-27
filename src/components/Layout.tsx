@@ -25,7 +25,7 @@ export default function Layout() {
     return (
         <SidebarProvider style={{ '--sidebar-width': '800px' } as React.CSSProperties}>
             <AppSidebar />
-            <SidebarInset className="flex-1 p-12 bg-purple-50 overflow-hidden">
+            <SidebarInset className="flex-1 p-4 md:p-12 bg-purple-50 overflow-hidden">
                 <main className="max-h-[800px] bg-white rounded-sm shadow-xl overflow-hidden border border-neutral-200">
                     <Outlet />
                 </main>

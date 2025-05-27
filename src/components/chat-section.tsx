@@ -81,7 +81,7 @@ const ChatSection = () => {
                 </div>
 
                 {/* Chat Footer */}
-                <div className="pb-48 px-4">
+                <div className="pb-28 2xl:pb-48 px-4">
                     <div className="bg-white rounded-lg border border-gray-200 p-2">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>

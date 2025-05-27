@@ -33,7 +33,7 @@ const InboxSection = () => {
 
             <div className="flex flex-col h-full overflow-hidden">
                 {/* Dropdown Menu Section */}
-                <div className="flex flex-col md:flex-row justify-between px-4 py-2 bg-white">
+                <div className="flex flex-row justify-between px-4 py-2 bg-white">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="border-none bg-white text-black shadow-none hover:bg-white hover:text-black p-0">
